@@ -1,4 +1,5 @@
-﻿@{
+﻿@using ErehwonMvc.Models
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -21,9 +22,29 @@
     <div class="col-md-4">
         <h2>Recently purchased blocks</h2>
         <p>Should show the most recently purchased</p>
+        <div id="pruebamesta">
+            @{
+                var test = new PlotDetailModel();
+                test.PlotName = "My Plot";
+                test.AvailableLandMeters = 1000;
+                test.PlotDescription = "My Desc";
+                test.PlotCategoryId = 1;
+
+                var availability = new PlotAvailabilityModel()
+                {
+                    PlotDescription = "Plot 2",
+                    TotalHectares = 100.0,
+                    PlotCategoryId = 1,
+                    PurchasedMeters = 50.0
+                };
+            }
+            @Html.Partial("~/Views/PlotDetail/Plot.cshtml", test)
+        </div>
     </div>
     <div class="col-md-4">
         <h2>Availability</h2>
+        
+        @Html.Partial("~/Views/PlotAvailability/PlotAvailability.cshtml", availability)
         <p>Show percentage of plots available for each block</p>
     </div>
 </div>
