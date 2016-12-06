@@ -185,11 +185,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\PlotAvailabilityController.cs" />
     <Compile Include="Controllers\PlotDetailController.cs" />
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\OrderHelpers.cs" />
     <Compile Include="Helpers\PurchaseHelpers.cs" />
     <Compile Include="Helpers\ViewHelpers.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -217,14 +220,19 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Images\block1seaside.jpg" />
+    <Content Include="Images\block1seaside_cr.jpg" />
     <Content Include="Images\block1seaside_th.jpg" />
     <Content Include="Images\block2mountainlake.jpg" />
+    <Content Include="Images\block2mountainlake_cr.jpg" />
     <Content Include="Images\block2mountainlake_th.jpg" />
     <Content Include="Images\block3farmlands.jpg" />
+    <Content Include="Images\block3farmlands_cr.jpg" />
     <Content Include="Images\block3farmlands_th.jpg" />
     <Content Include="Images\block4arable.jpg" />
+    <Content Include="Images\block4arable_cr.jpg" />
     <Content Include="Images\block4arable_th.jpg" />
     <Content Include="Images\block5industrial.jpg" />
+    <Content Include="Images\block5industrial_cr.jpg" />
     <Content Include="Images\block5industrial_th.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -292,6 +300,7 @@
     <Content Include="Views\PlotDetail\Plot.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\PlotAvailability\PlotAvailability.cshtml" />
+    <Content Include="Views\Order\Order.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

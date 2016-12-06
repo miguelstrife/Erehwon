@@ -19,7 +19,7 @@
 
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox">
-
+                                             
             @{
                 var pcc = new PlotCategoryController();
                 var categories = pcc.Get();
@@ -27,7 +27,7 @@
 
                 foreach (var plotCategory in categories)
                 {
-                    var img = ViewHelpers.GetPlotCarrousel(plotCategory.PlotCategoryID);
+                    var img = ViewHelpers.GetPlotImage(plotCategory.PlotCategoryID, ErehwonMvc.Enums.ImageType.Carousel);
 
                     var divClass ="item";
 

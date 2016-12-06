@@ -1,11 +1,12 @@
-﻿@using ErehwonMvc.Helpers
+﻿@using ErehwonMvc.Enums
+@using ErehwonMvc.Helpers
 @model ErehwonMvc.Models.PlotAvailabilityModel
 
 <div class="col-md-12">
     @{
         //Set plot image
 
-        var imgPath = ViewHelpers.GetPlotThumbnail(@Model.PlotCategoryId);
+        var imgPath = ViewHelpers.GetPlotImage(@Model.PlotCategoryId, ImageType.Thumbnail);
 
         // Set percentage bar
         var percentage = (@Model.PurchasedHectares/@Model.TotalHectares) * 100.0;

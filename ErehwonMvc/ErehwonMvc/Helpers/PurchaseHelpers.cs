@@ -36,8 +36,8 @@ namespace ErehwonMvc.Helpers
                 if (plotDetailModel.Hectares > maxAvailableHectares) return false;
                 // Prev Purchase rule
                 var totalClientHectares = clientPurchases.Where(
-                    x => x.Plot.PlotCategoryID == plotDetailModel.PlotCategoryId)
-                    .Sum(x => x.Plot.TotalHectares) + plotDetailModel.Hectares;
+                    x => x.PlotCategoryID == plotDetailModel.PlotCategoryId)
+                    .Sum(x => x.TotalHectares) + plotDetailModel.Hectares;
 
                 if (maxPlotHectare < MaxHect || (maxPlotHectare/4.0 < totalClientHectares)) return false;
             }
@@ -51,17 +51,17 @@ namespace ErehwonMvc.Helpers
             return dc.Plots.Where(x => x.PlotCategoryID == plotCategoryId).Sum(x => x.TotalHectares);
         }
 
-        private static List<Purchase> GetClientPurchases(int clientId)
+        private static List<Plot> GetClientPurchases(int clientId)
         {
             var dc = new ErehwonDataContext();
-            var result = new List<Purchase>();
+            var result = new List<Plot>();
             var clientOrders = dc.Orders.Where(x => x.ClientID == clientId);
             if (clientOrders.Any())
             {
                 foreach (var clientOrder in clientOrders)
                 {
                     //var list = clientOrder.Purchases.Select(x => new Purchase {AmountPaid = x.AmountPaid, Order = x.Order, OrderID = x.OrderID, Plot = x.Plot, PlotID = x.PlotID, PurchaseID = x.PurchaseID}).ToList();
-                    result.AddRange(clientOrder.Purchases.ToList());
+                    result.AddRange(clientOrder.Plots.ToList());
                 }
             }
 

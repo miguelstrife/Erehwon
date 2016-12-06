@@ -1,17 +1,18 @@
-﻿@using ErehwonMvc.Helpers
+﻿@using ErehwonMvc.Enums
+@using ErehwonMvc.Helpers
 @model ErehwonMvc.Models.PlotDetailModel
 
 <h2>@Model.PlotName</h2>
 <div class="col-md-12">
     @{
         //Set plot image 
-        var imgPath = ViewHelpers.GetPlotThumbnail(@Model.PlotCategoryId);
+        var imgPath = ViewHelpers.GetPlotImage(@Model.PlotCategoryId, ImageType.Thumbnail);
     }
     <img class="col-md-6" alt="Plot Image" src="@imgPath"/>
     <div class="col-md-6">
         <p>@Model.PlotDescription</p>
         <h4>Available ha</h4>
         <p>@Model.Hectares ha</p>
-        <button class="btn btn-success btn-sm">Purchase</button>
+        <button class="btn btn-success btn-sm" onclick="location.href='@Url.Action("Cookie", "Order")'">Purchase</button>
     </div> 
 </div>

@@ -3,16 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ErehwonMvc.ApiController;
+using ErehwonMvc.Helpers;
 using ErehwonMvc.Models;
 
 namespace ErehwonMvc.Controllers
 {
     public class PlotDetailController : Controller
     {
-        private static List<PlotDetailModel> _plots = new List<PlotDetailModel>();
         // GET: PlotDetail/Plot
-        public ActionResult Plot(PlotDetailModel plotDetail)
+        public ActionResult Plot(int id)
         {
+            var cont = new PlotCategoryController();
+            var plotCategory = cont.Get(id).First();
+            var plotDetail = new PlotDetailModel()
+            {
+                Hectares = plotCategory.TotalHectares.Value,
+                PlotCategoryId = plotCategory.PlotCategoryID,
+                PlotDescription = plotCategory.PlotCategoryDescription,
+                PlotName = plotCategory.PlotCategoryName,
+                PricePaidPerHectare = plotCategory.PricePerHectare.Value
+            };
+
             return View(plotDetail);
         }
 
