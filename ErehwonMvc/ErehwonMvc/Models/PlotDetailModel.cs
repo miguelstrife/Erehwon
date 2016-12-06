@@ -9,7 +9,9 @@ namespace ErehwonMvc.Models
     {
         public string PlotName { get; set; }
         public string PlotDescription { get; set; }
-        public int AvailableLandMeters { get; set; }
+        public double Hectares { get; set; }
         public int PlotCategoryId { get; set; }
+        public double PricePaidPerHectare { get; set; }
+
     }
 }

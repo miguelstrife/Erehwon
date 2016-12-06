@@ -8,16 +8,17 @@
         var imgPath = ViewHelpers.GetPlotThumbnail(@Model.PlotCategoryId);
 
         // Set percentage bar
-        var percentage = (@Model.PurchasedMeters/@Model.TotalHectares) * 100.0;
+        var percentage = (@Model.PurchasedHectares/@Model.TotalHectares) * 100.0;
     }
     <img class="col-md-4" alt="Plot Image" src="@imgPath" />
     <div class="col-md-8">
-        <h4>Purchased m<sup>2</sup></h4>
-        <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 70%">
-            <span class="sr-only">100 </span>
+        <h4>Purchased</h4>
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40"
+                 aria-valuemin="0" aria-valuemax="100" style="width:40%">
+                @($"{percentage:0.00}") %
+            </div>
         </div>
     </div>
-    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%">
-        <span class="sr-only">100 </span>
-    </div>
+
 </div>

@@ -27,5 +27,26 @@ namespace ErehwonMvc.Helpers
             }
             return imgPath;
         }
+
+        public static string GetPlotCarrousel(int plotCategoryId)
+        {
+            var imageDictionary = new Dictionary<int, string>()
+            {
+                {1, "block1seaside.jpg"},
+                {2, "block2mountainlake.jpg"},
+                {3, "block3farmlands.jpg"},
+                {4, "block4arable.jpg"},
+                {5, "block5industrial.jpg"},
+            };
+
+            string imgPath;
+
+            imageDictionary.TryGetValue(plotCategoryId, out imgPath);
+            if (!string.IsNullOrWhiteSpace(imgPath))
+            {
+                imgPath = @"/Images/" + imgPath;
+            }
+            return imgPath;
+        }
     }
 }
