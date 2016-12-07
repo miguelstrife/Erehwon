@@ -28,7 +28,9 @@ namespace ErehwonMvc.Controllers
             return View(plotDetail);
         }
 
-        public void Purchase(PlotDetailModel plotDetailModel)
+       
+       
+        public ActionResult Purchase(PlotDetailModel plotDetailModel)
         {
             var orderController = new OrderController();
             var plots = new List<Plot>
@@ -41,6 +43,8 @@ namespace ErehwonMvc.Controllers
                 }
             };
             orderController.Create(plots);
+
+            return Redirect("/Order");
         }
 
         //// GET: PlotDetail/Details/5

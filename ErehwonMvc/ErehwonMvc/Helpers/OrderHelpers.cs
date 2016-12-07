@@ -4,6 +4,7 @@ using System.Data.Linq;
 using System.Linq;
 using System.Web;
 using ErehwonMvc.Models;
+using WebGrease.Css.Extensions;
 
 namespace ErehwonMvc.Helpers
 {
@@ -93,6 +94,8 @@ namespace ErehwonMvc.Helpers
             {
                 throw new ArgumentException("Order already exists");
             }
+
+            
             DataContext.Orders.InsertOnSubmit(order);
              
             try
@@ -106,6 +109,46 @@ namespace ErehwonMvc.Helpers
             }
 
             return DataContext.Orders.FirstOrDefault(x => x.Guid == order.Guid);
+        }
+
+        public static void RemoveOrderGuid()
+        {
+            var cookie = HttpContext.Current.Request.Cookies.Get(CookieName);
+
+            if (string.IsNullOrWhiteSpace(cookie?.Value))
+            {
+                HttpContext.Current.Response.Cookies.Remove(CookieName);
+            }
+        }
+
+        public static void UpdateOrderPlot(Plot plot)
+        {
+            var dbPlot = DataContext.Plots.FirstOrDefault(x => x.PlotID == plot.PlotID);
+            if (dbPlot == null) throw new ArgumentException("Plot not Found");
+
+            dbPlot.TotalHectares = plot.TotalHectares;
+
+            DataContext.SubmitChanges();
+
+        }
+        public static Dictionary<int, double> GetPlotAvailability()
+        {
+            var categories = DataContext.PlotCategories.Select(x => x.PlotCategoryID);
+
+            var dictionary = new Dictionary<int, double>();
+
+            categories.ForEach(x => dictionary.Add(x, 0));
+
+            var purchasedPlots = DataContext.Orders.Where(x => x.DateOfCompletion != null)
+                .Join(DataContext.Plots, order => order.OrderID, plot => plot.OrderID,
+                    (order, plot) => new {plot.PlotCategoryID, plot.TotalHectares});
+
+            foreach (var purchasedPlot in purchasedPlots)
+            {
+                dictionary[purchasedPlot.PlotCategoryID] += purchasedPlot.TotalHectares;
+            }
+
+            return dictionary;
         }
 
     }

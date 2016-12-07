@@ -66,26 +66,13 @@
         <elementListCompartment Id="bb7c74d5-fa61-442a-9cfd-7451e43bf9c0" absoluteBounds="9.515, 2.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="258cd432-4f59-4d01-8549-8643d0ac70b8" absoluteBounds="3.5, 1.125, 2, 1.5785953776041664">
-      <DataClassMoniker Name="/ErehwonDataContext/Order" />
-      <nestedChildShapes>
-        <elementListCompartment Id="20a4a5ee-edd6-49ae-8fc7-3267d7e6bf7c" absoluteBounds="3.515, 1.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="ff08a9bf-b5b3-411d-8b1e-002f4d581f4f" absoluteBounds="6.25, 0.875, 2, 1.9631982421875003">
       <DataClassMoniker Name="/ErehwonDataContext/Plot" />
       <nestedChildShapes>
         <elementListCompartment Id="4cbf4149-fac8-41e0-a378-f78489f2ec03" absoluteBounds="6.265, 1.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 1.91429768880208); (6.25 : 1.91429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/ErehwonDataContext/Order/Order_Plot" />
-      <nodes>
-        <classShapeMoniker Id="258cd432-4f59-4d01-8549-8643d0ac70b8" />
-        <classShapeMoniker Id="ff08a9bf-b5b3-411d-8b1e-002f4d581f4f" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(9.5 : 2.23159912109375); (8.25 : 2.23159912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(9.5 : 2.23159912109375); (8.25 : 2.23159912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ErehwonDataContext/PlotCategory/PlotCategory_Plot" />
       <nodes>
         <classShapeMoniker Id="5da0966b-6521-4f68-9134-75bc796e5df4" />
@@ -98,18 +85,24 @@
         <elementListCompartment Id="c028729f-9599-416c-b655-3cfcab7d454c" absoluteBounds="4.1400000000000006, 4.46, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.8125 : 4); (4.8125 : 2.70359537760417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/ErehwonDataContext/Client/Client_Order" />
-      <nodes>
-        <classShapeMoniker Id="d912d89b-d25a-42bc-b76e-207c0fd782dd" />
-        <classShapeMoniker Id="258cd432-4f59-4d01-8549-8643d0ac70b8" />
-      </nodes>
-    </associationConnector>
-    <associationConnector edgePoints="[(6.8437475 : 7.375); (6.8437475 : 4.88544840494792); (6.125 : 4.88544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.8437475 : 7.375); (6.8437475 : 4.88544840494792); (6.125 : 4.88544840494792)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/ErehwonDataContext/AspNetUser/AspNetUser_Client" />
       <nodes>
         <classShapeMoniker Id="ff21a342-f295-41e9-9a9b-6b79c3a36e38" />
         <classShapeMoniker Id="d912d89b-d25a-42bc-b76e-207c0fd782dd" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="d8c77110-ad6a-428a-a7f3-0f32ae86afb0" absoluteBounds="3.5, 1.375, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/ErehwonDataContext/Order" />
+      <nestedChildShapes>
+        <elementListCompartment Id="036cab19-60cb-4033-a6b5-84bda83a3481" absoluteBounds="3.5149999999999997, 1.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 2.10659912109375); (6.25 : 2.10659912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ErehwonDataContext/Order/Order_Plot" />
+      <nodes>
+        <classShapeMoniker Id="d8c77110-ad6a-428a-a7f3-0f32ae86afb0" />
+        <classShapeMoniker Id="ff08a9bf-b5b3-411d-8b1e-002f4d581f4f" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

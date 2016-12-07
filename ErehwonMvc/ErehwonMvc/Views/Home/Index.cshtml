@@ -11,15 +11,15 @@
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-            <li data-target="#myCarousel" data-slide-to="3"></li>
+            <li data-target="/Plot/1" data-slide-to="0" class="active"></li>
+            <li data-target="/Plot/2" data-slide-to="1"></li>
+            <li data-target="/Plot/3" data-slide-to="2"></li>
+            <li data-target="/Plot/4" data-slide-to="3"></li>
+            <li data-target="/Plot/5" data-slide-to="0"></li>
         </ol>
 
         <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
-                                             
+        <div class="carousel-inner" role="listbox">                                        
             @{
                 var pcc = new PlotCategoryController();
                 var categories = pcc.Get();
@@ -37,7 +37,7 @@
                     }
 
                     <div class="@divClass">
-                        <img src="@img" alt="img">
+                        <a href="/PlotDetail/Plot/@(count+1)"><img src="@img" alt="img" class="img-responsive center-block"></a>
                     </div>
                     count++;
                 }
@@ -62,11 +62,9 @@
         <p>
             Should show the most popular
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Recently purchased blocks</h2>
-        <p>Should show the most recently purchased</p>
         <div id="pruebamesta">
             @{
                 var test = new PlotDetailModel();
@@ -81,7 +79,7 @@
     <div class="col-md-4">
         <h2>Availability</h2>
     @{
-
+        var plotAv = OrderHelpers.GetPlotAvailability();
         foreach (var category in categories)
         {
             var availability = new PlotAvailabilityModel()
@@ -89,13 +87,12 @@
                 PlotDescription = category.PlotCategoryDescription,
                 TotalHectares = category.TotalHectares.Value,
                 PlotCategoryId = category.PlotCategoryID,
-                PurchasedHectares = 50.0
+                PurchasedHectares = plotAv[category.PlotCategoryID]
             };
             @Html.Partial("~/Views/PlotAvailability/PlotAvailability.cshtml", availability);
         }
 
     }
-        
-        <p>Show percentage of plots available for each block</p>
+        <p class="text-right">*Estimated percentage of land available</p>
     </div>
 </div>

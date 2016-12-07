@@ -48,15 +48,15 @@ namespace ErehwonMvc.Models
     partial void InsertPlotCategory(PlotCategory instance);
     partial void UpdatePlotCategory(PlotCategory instance);
     partial void DeletePlotCategory(PlotCategory instance);
-    partial void InsertOrder(Order instance);
-    partial void UpdateOrder(Order instance);
-    partial void DeleteOrder(Order instance);
     partial void InsertPlot(Plot instance);
     partial void UpdatePlot(Plot instance);
     partial void DeletePlot(Plot instance);
     partial void InsertClient(Client instance);
     partial void UpdateClient(Client instance);
     partial void DeleteClient(Client instance);
+    partial void InsertOrder(Order instance);
+    partial void UpdateOrder(Order instance);
+    partial void DeleteOrder(Order instance);
     #endregion
 		
 		public ErehwonDataContext() : 
@@ -137,14 +137,6 @@ namespace ErehwonMvc.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Order> Orders
-		{
-			get
-			{
-				return this.GetTable<Order>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Plot> Plots
 		{
 			get
@@ -158,6 +150,14 @@ namespace ErehwonMvc.Models
 			get
 			{
 				return this.GetTable<Client>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Order> Orders
+		{
+			get
+			{
+				return this.GetTable<Order>();
 			}
 		}
 	}
@@ -1394,209 +1394,6 @@ namespace ErehwonMvc.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Order]")]
-	public partial class Order : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _OrderID;
-		
-		private System.Nullable<int> _ClientID;
-		
-		private System.Nullable<System.Guid> _Guid;
-		
-		private System.Nullable<System.DateTime> _DateOfCompletion;
-		
-		private EntitySet<Plot> _Plots;
-		
-		private EntityRef<Client> _Client;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnOrderIDChanging(int value);
-    partial void OnOrderIDChanged();
-    partial void OnClientIDChanging(System.Nullable<int> value);
-    partial void OnClientIDChanged();
-    partial void OnGuidChanging(System.Nullable<System.Guid> value);
-    partial void OnGuidChanged();
-    partial void OnDateOfCompletionChanging(System.Nullable<System.DateTime> value);
-    partial void OnDateOfCompletionChanged();
-    #endregion
-		
-		public Order()
-		{
-			this._Plots = new EntitySet<Plot>(new Action<Plot>(this.attach_Plots), new Action<Plot>(this.detach_Plots));
-			this._Client = default(EntityRef<Client>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int OrderID
-		{
-			get
-			{
-				return this._OrderID;
-			}
-			set
-			{
-				if ((this._OrderID != value))
-				{
-					this.OnOrderIDChanging(value);
-					this.SendPropertyChanging();
-					this._OrderID = value;
-					this.SendPropertyChanged("OrderID");
-					this.OnOrderIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientID", DbType="Int")]
-		public System.Nullable<int> ClientID
-		{
-			get
-			{
-				return this._ClientID;
-			}
-			set
-			{
-				if ((this._ClientID != value))
-				{
-					if (this._Client.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnClientIDChanging(value);
-					this.SendPropertyChanging();
-					this._ClientID = value;
-					this.SendPropertyChanged("ClientID");
-					this.OnClientIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Guid", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> Guid
-		{
-			get
-			{
-				return this._Guid;
-			}
-			set
-			{
-				if ((this._Guid != value))
-				{
-					this.OnGuidChanging(value);
-					this.SendPropertyChanging();
-					this._Guid = value;
-					this.SendPropertyChanged("Guid");
-					this.OnGuidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateOfCompletion", DbType="DateTime")]
-		public System.Nullable<System.DateTime> DateOfCompletion
-		{
-			get
-			{
-				return this._DateOfCompletion;
-			}
-			set
-			{
-				if ((this._DateOfCompletion != value))
-				{
-					this.OnDateOfCompletionChanging(value);
-					this.SendPropertyChanging();
-					this._DateOfCompletion = value;
-					this.SendPropertyChanged("DateOfCompletion");
-					this.OnDateOfCompletionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Plot", Storage="_Plots", ThisKey="OrderID", OtherKey="OrderID")]
-		public EntitySet<Plot> Plots
-		{
-			get
-			{
-				return this._Plots;
-			}
-			set
-			{
-				this._Plots.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Client_Order", Storage="_Client", ThisKey="ClientID", OtherKey="ClientID", IsForeignKey=true)]
-		public Client Client
-		{
-			get
-			{
-				return this._Client.Entity;
-			}
-			set
-			{
-				Client previousValue = this._Client.Entity;
-				if (((previousValue != value) 
-							|| (this._Client.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Client.Entity = null;
-						previousValue.Orders.Remove(this);
-					}
-					this._Client.Entity = value;
-					if ((value != null))
-					{
-						value.Orders.Add(this);
-						this._ClientID = value.ClientID;
-					}
-					else
-					{
-						this._ClientID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Client");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Plots(Plot entity)
-		{
-			this.SendPropertyChanging();
-			entity.Order = this;
-		}
-		
-		private void detach_Plots(Plot entity)
-		{
-			this.SendPropertyChanging();
-			entity.Order = null;
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Plot")]
 	public partial class Plot : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -1615,9 +1412,9 @@ namespace ErehwonMvc.Models
 		
 		private int _OrderID;
 		
-		private EntityRef<Order> _Order;
-		
 		private EntityRef<PlotCategory> _PlotCategory;
+		
+		private EntityRef<Order> _Order;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1639,8 +1436,8 @@ namespace ErehwonMvc.Models
 		
 		public Plot()
 		{
-			this._Order = default(EntityRef<Order>);
 			this._PlotCategory = default(EntityRef<PlotCategory>);
+			this._Order = default(EntityRef<Order>);
 			OnCreated();
 		}
 		
@@ -1772,40 +1569,6 @@ namespace ErehwonMvc.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Plot", Storage="_Order", ThisKey="OrderID", OtherKey="OrderID", IsForeignKey=true)]
-		public Order Order
-		{
-			get
-			{
-				return this._Order.Entity;
-			}
-			set
-			{
-				Order previousValue = this._Order.Entity;
-				if (((previousValue != value) 
-							|| (this._Order.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Order.Entity = null;
-						previousValue.Plots.Remove(this);
-					}
-					this._Order.Entity = value;
-					if ((value != null))
-					{
-						value.Plots.Add(this);
-						this._OrderID = value.OrderID;
-					}
-					else
-					{
-						this._OrderID = default(int);
-					}
-					this.SendPropertyChanged("Order");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlotCategory_Plot", Storage="_PlotCategory", ThisKey="PlotCategoryID", OtherKey="PlotCategoryID", IsForeignKey=true)]
 		public PlotCategory PlotCategory
 		{
@@ -1836,6 +1599,40 @@ namespace ErehwonMvc.Models
 						this._PlotCategoryID = default(int);
 					}
 					this.SendPropertyChanged("PlotCategory");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Plot", Storage="_Order", ThisKey="OrderID", OtherKey="OrderID", IsForeignKey=true)]
+		public Order Order
+		{
+			get
+			{
+				return this._Order.Entity;
+			}
+			set
+			{
+				Order previousValue = this._Order.Entity;
+				if (((previousValue != value) 
+							|| (this._Order.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Order.Entity = null;
+						previousValue.Plots.Remove(this);
+					}
+					this._Order.Entity = value;
+					if ((value != null))
+					{
+						value.Plots.Add(this);
+						this._OrderID = value.OrderID;
+					}
+					else
+					{
+						this._OrderID = default(int);
+					}
+					this.SendPropertyChanged("Order");
 				}
 			}
 		}
@@ -1877,8 +1674,6 @@ namespace ErehwonMvc.Models
 		
 		private string _UserID;
 		
-		private EntitySet<Order> _Orders;
-		
 		private EntityRef<AspNetUser> _AspNetUser;
 		
     #region Extensibility Method Definitions
@@ -1899,7 +1694,6 @@ namespace ErehwonMvc.Models
 		
 		public Client()
 		{
-			this._Orders = new EntitySet<Order>(new Action<Order>(this.attach_Orders), new Action<Order>(this.detach_Orders));
 			this._AspNetUser = default(EntityRef<AspNetUser>);
 			OnCreated();
 		}
@@ -2008,19 +1802,6 @@ namespace ErehwonMvc.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Client_Order", Storage="_Orders", ThisKey="ClientID", OtherKey="ClientID")]
-		public EntitySet<Order> Orders
-		{
-			get
-			{
-				return this._Orders;
-			}
-			set
-			{
-				this._Orders.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AspNetUser_Client", Storage="_AspNetUser", ThisKey="UserID", OtherKey="Id", IsForeignKey=true)]
 		public AspNetUser AspNetUser
 		{
@@ -2074,17 +1855,167 @@ namespace ErehwonMvc.Models
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.[Order]")]
+	public partial class Order : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		private void attach_Orders(Order entity)
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _OrderID;
+		
+		private System.Nullable<int> _ClientID;
+		
+		private System.Nullable<System.Guid> _Guid;
+		
+		private System.Nullable<System.DateTime> _DateOfCompletion;
+		
+		private EntitySet<Plot> _Plots;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnOrderIDChanging(int value);
+    partial void OnOrderIDChanged();
+    partial void OnClientIDChanging(System.Nullable<int> value);
+    partial void OnClientIDChanged();
+    partial void OnGuidChanging(System.Nullable<System.Guid> value);
+    partial void OnGuidChanged();
+    partial void OnDateOfCompletionChanging(System.Nullable<System.DateTime> value);
+    partial void OnDateOfCompletionChanged();
+    #endregion
+		
+		public Order()
 		{
-			this.SendPropertyChanging();
-			entity.Client = this;
+			this._Plots = new EntitySet<Plot>(new Action<Plot>(this.attach_Plots), new Action<Plot>(this.detach_Plots));
+			OnCreated();
 		}
 		
-		private void detach_Orders(Order entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int OrderID
+		{
+			get
+			{
+				return this._OrderID;
+			}
+			set
+			{
+				if ((this._OrderID != value))
+				{
+					this.OnOrderIDChanging(value);
+					this.SendPropertyChanging();
+					this._OrderID = value;
+					this.SendPropertyChanged("OrderID");
+					this.OnOrderIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ClientID", DbType="Int")]
+		public System.Nullable<int> ClientID
+		{
+			get
+			{
+				return this._ClientID;
+			}
+			set
+			{
+				if ((this._ClientID != value))
+				{
+					this.OnClientIDChanging(value);
+					this.SendPropertyChanging();
+					this._ClientID = value;
+					this.SendPropertyChanged("ClientID");
+					this.OnClientIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Guid", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> Guid
+		{
+			get
+			{
+				return this._Guid;
+			}
+			set
+			{
+				if ((this._Guid != value))
+				{
+					this.OnGuidChanging(value);
+					this.SendPropertyChanging();
+					this._Guid = value;
+					this.SendPropertyChanged("Guid");
+					this.OnGuidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateOfCompletion", DbType="DateTime")]
+		public System.Nullable<System.DateTime> DateOfCompletion
+		{
+			get
+			{
+				return this._DateOfCompletion;
+			}
+			set
+			{
+				if ((this._DateOfCompletion != value))
+				{
+					this.OnDateOfCompletionChanging(value);
+					this.SendPropertyChanging();
+					this._DateOfCompletion = value;
+					this.SendPropertyChanged("DateOfCompletion");
+					this.OnDateOfCompletionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Plot", Storage="_Plots", ThisKey="OrderID", OtherKey="OrderID")]
+		public EntitySet<Plot> Plots
+		{
+			get
+			{
+				return this._Plots;
+			}
+			set
+			{
+				this._Plots.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Plots(Plot entity)
 		{
 			this.SendPropertyChanging();
-			entity.Client = null;
+			entity.Order = this;
+		}
+		
+		private void detach_Plots(Plot entity)
+		{
+			this.SendPropertyChanging();
+			entity.Order = null;
 		}
 	}
 }

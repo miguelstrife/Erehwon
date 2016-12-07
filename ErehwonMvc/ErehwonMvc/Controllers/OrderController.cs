@@ -7,18 +7,26 @@ using System.Web;
 using System.Web.Mvc;
 using ErehwonMvc.Helpers;
 using ErehwonMvc.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 
 namespace ErehwonMvc.Controllers
 {
     public class OrderController : Controller
     {
-        
         // GET: Order
         public ActionResult Index()
         {
             var orderId = OrderHelpers.GetTempOrderId();
             var currentOrder = OrderHelpers.GetOrderByGuid(new Guid(orderId));
+
+            // TODO: find a better way to check if Auth User has a pending order
+            if (currentOrder.ClientID == null && User.Identity.IsAuthenticated)
+            {
+                var clientId = AccountHelper.GetClientIdByUserId(User.Identity.GetUserId());
+                AccountHelper.TieAccountOrders(clientId);
+            }
+
             ViewData["MyOrderPlotList"] = currentOrder.Plots.ToList();
             return View(currentOrder);
         }
@@ -34,21 +42,37 @@ namespace ErehwonMvc.Controllers
         public int Create(List<Plot> plots)
         {
             var tempOrderId = OrderHelpers.GetTempOrderId();
-            // Check if we have a current order
-            //var currentOrder = OrderHelpers.GetOrderByGuid(new Guid(tempOrderId)) ?? new Order()
-            //{
-            //    Guid = new Guid(tempOrderId),
-            //};
 
-            //var insertedOrder = OrderHelpers.CreateOrder(currentOrder);
             plots.ForEach(OrderHelpers.AddItem);
 
             return OrderHelpers.GetOrderByGuid(new Guid(tempOrderId)).OrderID;
         }
 
-        public void Remove(Plot plot)
+        public ActionResult Remove(Plot plot)
         {
             OrderHelpers.RemoveItem(plot);
+            return Redirect("/Order");
+        }
+
+        [HttpPost]
+        public ActionResult UpdatePlot(Plot plot)
+        {
+            OrderHelpers.UpdateOrderPlot(plot);
+            return Redirect("/Order");
+        }
+
+        [Authorize]
+        public ActionResult Finalize(string orderId)
+        {
+            var validate = PurchaseHelpers.ValidateOrder(orderId);
+            if (!validate)
+            {
+                // Sth
+            }
+            var purchaseResult = PurchaseHelpers.FinalizePurchase(orderId);
+            OrderHelpers.RemoveOrderGuid();
+
+            return purchaseResult ? View("PurchaseComplete") : View("Error");
         }
     
     }

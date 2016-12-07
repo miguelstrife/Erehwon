@@ -62,16 +62,6 @@
       <Association Name="PlotCategory_Plot" Member="Plots" ThisKey="PlotCategoryID" OtherKey="PlotCategoryID" Type="Plot" />
     </Type>
   </Table>
-  <Table Name="dbo.[Order]" Member="Orders">
-    <Type Name="Order">
-      <Column Name="OrderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="ClientID" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="Guid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="DateOfCompletion" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Association Name="Order_Plot" Member="Plots" ThisKey="OrderID" OtherKey="OrderID" Type="Plot" />
-      <Association Name="Client_Order" Member="Client" ThisKey="ClientID" OtherKey="ClientID" Type="Client" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Plot" Member="Plots">
     <Type Name="Plot">
       <Column Name="PlotID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -80,8 +70,8 @@
       <Column Name="PlotCategoryID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="TotalHectares" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="OrderID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Order_Plot" Member="Order" ThisKey="OrderID" OtherKey="OrderID" Type="Order" IsForeignKey="true" />
       <Association Name="PlotCategory_Plot" Member="PlotCategory" ThisKey="PlotCategoryID" OtherKey="PlotCategoryID" Type="PlotCategory" IsForeignKey="true" />
+      <Association Name="Order_Plot" Member="Order" ThisKey="OrderID" OtherKey="OrderID" Type="Order" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Client" Member="Clients">
@@ -91,8 +81,16 @@
       <Column Name="LastName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
       <Column Name="DateOfBirth" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="UserID" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
-      <Association Name="Client_Order" Member="Orders" ThisKey="ClientID" OtherKey="ClientID" Type="Order" />
       <Association Name="AspNetUser_Client" Member="AspNetUser" ThisKey="UserID" OtherKey="Id" Type="AspNetUser" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.[Order]" Member="Orders">
+    <Type Name="Order">
+      <Column Name="OrderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ClientID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Guid" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="DateOfCompletion" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Order_Plot" Member="Plots" ThisKey="OrderID" OtherKey="OrderID" Type="Plot" />
     </Type>
   </Table>
 </Database>

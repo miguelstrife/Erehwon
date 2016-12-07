@@ -1,0 +1,27 @@
+﻿@using ErehwonMvc.Enums
+@using ErehwonMvc.Helpers
+@model ErehwonMvc.Models.Plot
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")"></script>
+
+@{ var imgPath = ViewHelpers.GetPlotImage(Model.PlotCategoryID, ImageType.Thumbnail); }
+<div class="col-md-8">
+    <h2>@Model.PlotName</h2>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <img class="col-md-4" alt="Plot Image" src="@imgPath" />
+    <div class="col-md-4">
+        <p>@Model.PlotDescription</p>
+        <h4>Number of ha to purchase</h4>
+        @using (Html.BeginForm("UpdatePlot", "Order", Model, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.TextBoxFor(m => m.TotalHectares, new { @class = "form-control", @type = "number",})
+            @Html.ValidationMessageFor(m => m.TotalHectares, "", new { @class = "text-danger" })
+            <h2></h2>
+            <button class="btn btn-success" onclick="location.href = '@Url.Action("UpdatePlot", "Order", Model)'">Update Order</button>
+            <h2></h2>
+            <button class="btn btn-danger" onclick="location.href = '@Url.Action("Remove", "Order", Model)'">Remove</button>
+        }
+    </div>
+</div>
+<br />
