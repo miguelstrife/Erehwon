@@ -1,0 +1,26 @@
+﻿@using ErehwonMvc.Enums
+@using ErehwonMvc.Helpers
+@using ErehwonMvc.Models
+@model IList<ErehwonMvc.Models.Order>
+    
+@{
+    var orderHelpers = new OrderHelpers();
+
+    foreach (var order in Model)
+    {
+        <div class="col-md-8">
+            <h2>Order #: @order.OrderID</h2>
+            @{
+                var plots = orderHelpers.GetPurchasedPlotList(order.OrderID);
+                foreach (var plot in plots)
+                {
+                    @Html.Partial("~/Views/PlotDetail/PlotCompleted.cshtml", plot);
+                }
+            }
+
+
+
+        </div>
+   }
+}
+

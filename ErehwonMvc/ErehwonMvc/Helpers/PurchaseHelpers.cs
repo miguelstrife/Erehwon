@@ -28,6 +28,7 @@ namespace ErehwonMvc.Helpers
                     if (dbOrder == null)
                         throw new ArgumentException("Order Not Found");
                     dbOrder.DateOfCompletion = DateTime.Now;
+                    DataContext.SubmitChanges();
                     result = true;
                     transaction.Complete();
                 }
@@ -39,7 +40,7 @@ namespace ErehwonMvc.Helpers
             return result;
         }
 
-        public  bool ValidateOrder(string orderId)
+        public  string ValidateOrder(string orderId)
         {
             // No more than 25% of the total block or more than 500 hect.
             // Min 20 hect per plot.
@@ -56,29 +57,22 @@ namespace ErehwonMvc.Helpers
             foreach (var plotDetailModel in order.Plots)
             {
                 // Min Rule
-                if (plotDetailModel.TotalHectares < MinHect) return false;
+                if (plotDetailModel.TotalHectares < MinHect) return "Your plot size is below 20 ha.";
 
                 var maxPlotHectare = GetMaxPlotHectare(plotDetailModel.PlotCategoryID);
-                var purchasedHectares = GetPurchasedHectares(plotDetailModel.PlotCategoryID);
-                // Get Available Hectares
-                var maxAvailableHectares = maxPlotHectare - purchasedHectares;
+                var freeHectares = OrderHelpers.GetPlotAvailableHaByPlotCategoryId(plotDetailModel.PlotCategoryID);
 
                 // Max Rule
-                if (plotDetailModel.TotalHectares > maxAvailableHectares) return false;
+                if (plotDetailModel.TotalHectares > freeHectares) return "Not enough ha left to purchase";
                 // Prev Purchase rule
                 var totalClientHectares = clientPurchases.Where(
                     x => x.PlotCategoryID == plotDetailModel.PlotCategoryID)
                     .Sum(x => x.TotalHectares) + plotDetailModel.TotalHectares;
 
-                if (totalClientHectares < MaxHect || (maxPlotHectare / 4.0 < totalClientHectares)) return false;
+                if (totalClientHectares > MaxHect || (maxPlotHectare / 4.0 < totalClientHectares)) return "You have purchased "+totalClientHectares+" already. The maximum is "+MaxHect+" or 25% per plot";
             }
 
-            return true;
-        }
-
-        private  double GetPurchasedHectares(int plotCategoryId)
-        {
-            return DataContext.Plots.Where(x => x.PlotCategoryID == plotCategoryId).Sum(x => x.TotalHectares);
+            return "";
         }
 
         private  List<Plot> GetClientPurchases(int clientId)

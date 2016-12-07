@@ -12,9 +12,9 @@ namespace ErehwonMvc.Helpers
     {
         private const string CookieName = "Erehwon";
 
-        private  readonly ErehwonDataContext DataContext = new ErehwonDataContext();
+        private readonly ErehwonDataContext DataContext = new ErehwonDataContext();
 
-        public  void AddItem(Plot plot)
+        public void AddItem(Plot plot)
         {
             var tempOrderId = GetTempOrderId();
             var order = DataContext.Orders.FirstOrDefault(x => tempOrderId == x.Guid.ToString());
@@ -32,7 +32,7 @@ namespace ErehwonMvc.Helpers
                 };
                 DataContext.Orders.InsertOnSubmit(order);
             }
-           
+
             try
             {
                 DataContext.SubmitChanges();
@@ -44,7 +44,7 @@ namespace ErehwonMvc.Helpers
             }
         }
 
-        public  void RemoveItem(Plot plot)
+        public void RemoveItem(Plot plot)
         {
             var plotToDelete = DataContext.Plots.First(x => x.PlotID == plot.PlotID);
             DataContext.Plots.DeleteOnSubmit(plotToDelete);
@@ -60,7 +60,7 @@ namespace ErehwonMvc.Helpers
             }
         }
 
-        public  string GetTempOrderId()
+        public string GetTempOrderId()
         {
             //Check if we have an existent order
 
@@ -71,33 +71,33 @@ namespace ErehwonMvc.Helpers
             // If we dont find one, generate a new id
             var tempOrderId = Guid.NewGuid();
             var order = new HttpCookie(CookieName, tempOrderId.ToString())
-            { 
+            {
                 Expires = DateTime.Now.AddDays(10)
             };
             HttpContext.Current.Response.Cookies.Add(order);
             return order.Value;
         }
 
-        public  Order GetOrderByOrderId(int orderId)
+        public Order GetOrderByOrderId(int orderId)
         {
             return DataContext.Orders.FirstOrDefault(x => x.OrderID == orderId);
         }
 
-        public  Order GetOrderByGuid(Guid guid)
+        public Order GetOrderByGuid(Guid guid)
         {
             return DataContext.Orders.FirstOrDefault(x => x.Guid == guid);
         }
 
-        public  Order CreateOrder(Order order)
+        public Order CreateOrder(Order order)
         {
             if (order.OrderID != 0)
             {
                 throw new ArgumentException("Order already exists");
             }
 
-            
+
             DataContext.Orders.InsertOnSubmit(order);
-             
+
             try
             {
                 DataContext.SubmitChanges();
@@ -111,7 +111,7 @@ namespace ErehwonMvc.Helpers
             return DataContext.Orders.FirstOrDefault(x => x.Guid == order.Guid);
         }
 
-        public  void RemoveOrderGuid()
+        public void RemoveOrderGuid()
         {
             var cookie = HttpContext.Current.Request.Cookies.Get(CookieName);
 
@@ -121,25 +121,25 @@ namespace ErehwonMvc.Helpers
             }
         }
 
-        public  void UpdateOrderPlot(Plot plot)
+        public void UpdateOrderPlot(Plot plot)
         {
             var dbPlot = DataContext.Plots.FirstOrDefault(x => x.PlotID == plot.PlotID);
-            
+
             if (dbPlot == null) throw new ArgumentException("Plot not Found");
             var pricePerHa = GetPlotPrice(dbPlot.PlotCategoryID);
             dbPlot.TotalHectares = plot.TotalHectares;
-            dbPlot.Price = plot.TotalHectares * pricePerHa;
+            dbPlot.Price = plot.TotalHectares*pricePerHa;
 
             DataContext.SubmitChanges();
 
         }
 
-        public  double GetPlotPrice(int plotCategoryId)
+        public double GetPlotPrice(int plotCategoryId)
         {
             return DataContext.PlotCategories.First(x => x.PlotCategoryID == plotCategoryId).PricePerHectare.Value;
         }
 
-        public  Dictionary<int, double> GetPlotAvailability()
+        public Dictionary<int, double> GetPlotAvailability()
         {
             var categories = DataContext.PlotCategories.Select(x => x.PlotCategoryID);
 
@@ -159,14 +159,14 @@ namespace ErehwonMvc.Helpers
             return dictionary;
         }
 
-        public  double GetPlotAvailableHaByPlotCategoryId(int plotCategoryId)
+        public double GetPlotAvailableHaByPlotCategoryId(int plotCategoryId)
         {
             var result = 0.0;
 
             var purchasedPlots = DataContext.Orders.Where(x => x.DateOfCompletion != null)
                 .Join(DataContext.Plots, order => order.OrderID, plot => plot.OrderID,
-                    (order, plot) => new { plot.PlotCategoryID, plot.TotalHectares })
-                    .Where(x => x.PlotCategoryID == plotCategoryId);
+                    (order, plot) => new {plot.PlotCategoryID, plot.TotalHectares})
+                .Where(x => x.PlotCategoryID == plotCategoryId);
 
             foreach (var purchasedPlot in purchasedPlots)
             {
@@ -178,5 +178,15 @@ namespace ErehwonMvc.Helpers
             return plotCategory.TotalHectares.Value - result;
         }
 
+        public List<Order> GetUserOrders(int clientId)
+        {
+            return DataContext.Orders.Where(x => x.DateOfCompletion != null && x.ClientID == clientId).ToList();
+        }
+
+        public List<Plot> GetPurchasedPlotList(int orderId)
+        {
+            var order = DataContext.Orders.First(x => x.OrderID == orderId && x.DateOfCompletion != null);
+            return order.Plots.ToList();
+        }
     }
 }

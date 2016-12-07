@@ -20,9 +20,7 @@ namespace ErehwonMvc.Controllers
 
         // GET: Order
         public ActionResult Index()
-        {
-            
-
+        {          
             var orderId = OrderHelpers.GetTempOrderId();
             var currentOrder = OrderHelpers.GetOrderByGuid(new Guid(orderId));
 
@@ -77,12 +75,25 @@ namespace ErehwonMvc.Controllers
         }
 
         [Authorize]
+        public ActionResult PreviousOrders()
+        {
+            var clientId = AccountHelper.GetClientIdByUserId(User.Identity.GetUserId());
+            var orders = OrderHelpers.GetUserOrders(clientId);
+
+            return View("~/Views/Order/OrderComplete.cshtml", orders);
+        }
+        
+
+        [Authorize]
         public ActionResult Finalize(string orderId)
         {
             var validate = PurchaseHelpers.ValidateOrder(orderId);
-            if (!validate)
+            if (!string.IsNullOrWhiteSpace(validate))
             {
-                // Sth
+                ViewData["OrderErrors"] = "There were some errors in your order, please review: "+validate;
+                ViewData["MyOrderPlotList"] = OrderHelpers.GetOrderByGuid(new Guid(orderId)).Plots.ToList();
+                var currentOrder = OrderHelpers.GetOrderByGuid(new Guid(orderId));
+                return View("~/Views/Order/Index.cshtml", currentOrder);
             }
             var purchaseResult = PurchaseHelpers.FinalizePurchase(orderId);
             OrderHelpers.RemoveOrderGuid();

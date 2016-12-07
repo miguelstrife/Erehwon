@@ -306,6 +306,8 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Shared\PurchaseComplete.cshtml" />
     <Content Include="Views\Order\OrderPlot.cshtml" />
+    <Content Include="Views\Order\OrderComplete.cshtml" />
+    <Content Include="Views\PlotDetail\PlotCompleted.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

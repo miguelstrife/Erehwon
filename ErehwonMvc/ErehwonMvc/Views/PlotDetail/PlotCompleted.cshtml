@@ -1,0 +1,19 @@
+﻿@using ErehwonMvc.Enums
+@using ErehwonMvc.Helpers
+@model ErehwonMvc.Models.Plot
+
+@{
+    var ViewHelpers = new ViewHelpers();
+    var imgPath = ViewHelpers.GetPlotImage(Model.PlotCategoryID, ImageType.Thumbnail);
+}
+<div class="col-md-8">
+    <h2>@Model.PlotName</h2>
+    <img class="col-md-4" alt="Plot Image" src="@imgPath" />
+    <div class="col-md-4">
+        <h4>Size</h4>
+        <h2>@Model.TotalHectares ha</h2>
+        <h4>Price</h4>
+        <h2>@Model.Price g</h2>
+    </div>
+</div>
+<hr />

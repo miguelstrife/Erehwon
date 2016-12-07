@@ -11,6 +11,10 @@
 
 <h2>My Current Order</h2>
 @{
+    if (ViewData["OrderErrors"] != null)
+    {
+        <p class="text-danger">@ViewData["OrderErrors"]</p>
+    }
     var list = (List<Plot>)ViewData["MyOrderPlotList"];
     if (!list.Any())
     {

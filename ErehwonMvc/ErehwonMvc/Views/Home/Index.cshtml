@@ -60,31 +60,34 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4">
-        <h2>Most popular blocks</h2>
-        <p>
-            Should show the most popular
-        </p>
-    </div>
-    <div class="col-md-4">
-        <h2>Recently purchased blocks</h2>
+    <div class="col-md-6">
+        <h2>Recently added blocks</h2>
         <div id="pruebamesta">
             @{
-                var test = new PlotDetailModel();
-                test.PlotName = "My Plot";
-                test.Hectares = 1000;
-                test.PlotDescription = "My Desc";
-                test.PlotCategoryId = 1;
+                
+
+                foreach (var category in categories)
+                {
+                    var detailModel = new PlotDetailModel();
+                    detailModel.PlotName = category.PlotCategoryName;
+                    detailModel.Hectares = category.TotalHectares.Value;
+                    detailModel.PlotDescription = category.PlotCategoryDescription;
+                    detailModel.PlotCategoryId = category.PlotCategoryID;
+                    detailModel.PricePaidPerHectare = category.PricePerHectare.Value;
+                    @Html.Partial("~/Views/PlotDetail/Plot.cshtml", detailModel)
+                }
+                
             }
-            @Html.Partial("~/Views/PlotDetail/Plot.cshtml", test)
+            
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-6">
         <h2>Availability</h2>
     @{
-        var plotAv = OrderHelpers.GetPlotAvailability();
+
         foreach (var category in categories)
         {
+            var plotAv = OrderHelpers.GetPlotAvailability();
             var availability = new PlotAvailabilityModel()
             {
                 PlotDescription = category.PlotCategoryDescription,
@@ -92,7 +95,11 @@
                 PlotCategoryId = category.PlotCategoryID,
                 PurchasedHectares = plotAv[category.PlotCategoryID]
             };
-            @Html.Partial("~/Views/PlotAvailability/PlotAvailability.cshtml", availability);
+
+            <div style="margin-bottom: 20px">
+                @Html.Partial("~/Views/PlotAvailability/PlotAvailability.cshtml", availability)
+                <hr/>
+            </div>
         }
 
     }
