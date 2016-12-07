@@ -6,9 +6,9 @@ using ErehwonMvc.Enums;
 
 namespace ErehwonMvc.Helpers
 {
-    public static class ViewHelpers
+    public  class ViewHelpers
     {
-        public static string GetPlotImage(int plotCategoryId, ImageType imageType)
+        public  string GetPlotImage(int plotCategoryId, ImageType imageType)
         {
             var imageTypeDictionary = new Dictionary<ImageType, string>()
             {
@@ -35,7 +35,7 @@ namespace ErehwonMvc.Helpers
             return imgPath;
         }
 
-        //public static string GetPlotCarrousel(int plotCategoryId)
+        //public  string GetPlotCarrousel(int plotCategoryId)
         //{
         //    var imageDictionary = new Dictionary<int, string>()
         //    {

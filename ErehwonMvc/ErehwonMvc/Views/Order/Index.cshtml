@@ -24,7 +24,10 @@
    
 }
 
-<h2></h2>
+
+<h2>Order Total:</h2>
+<h1>@(list.Sum(x => x.Price)) g</h1>
+
 <button class="btn btn-success btn-lg" @((!list.Any()) ? "disabled" : "") onclick="location.href = '@Url.Action("Finalize", "Order", new { orderId = Model.Guid.ToString()})'">Complete Order</button>
 <h2></h2>
 <button class="btn btn-lg" onclick="location.href = '@Url.Action("Index", "Home")'">Continue Shopping</button>

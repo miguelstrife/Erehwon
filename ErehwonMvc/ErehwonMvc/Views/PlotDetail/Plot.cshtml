@@ -6,14 +6,18 @@
 <h2>@Model.PlotName</h2>
 <div class="col-md-12">
     @{
+        var OrderHelpers = new OrderHelpers();
+        var ViewHelpers = new ViewHelpers();
         //Set plot image 
         var imgPath = ViewHelpers.GetPlotImage(@Model.PlotCategoryId, ImageType.Thumbnail);
+        var availableHa = OrderHelpers.GetPlotAvailableHaByPlotCategoryId(@Model.PlotCategoryId);
     }
     <img class="col-md-6" alt="Plot Image" src="@imgPath"/>
     <div class="col-md-6">
         <p>@Model.PlotDescription</p>
-        <h4>Available ha</h4>
-        <p>@Model.Hectares ha</p>
+        <h4>Available @availableHa ha</h4>
+        @*<p>@Model.Hectares ha</p>*@
+        <h4>Price per Ha: @Model.PricePaidPerHectare g</h4>
         <button class="btn btn-success btn-sm" onclick="location.href = '@Url.Action("Purchase", "PlotDetail", @Model)'">Purchase</button>
     </div> 
 </div>

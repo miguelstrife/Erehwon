@@ -6,11 +6,12 @@ using ErehwonMvc.Models;
 
 namespace ErehwonMvc.Helpers
 {
-    public static class AccountHelper
+    public  class AccountHelper
     {
-        private static readonly ErehwonDataContext DataContext = new ErehwonDataContext();
+        private  readonly ErehwonDataContext DataContext = new ErehwonDataContext();
+        private OrderHelpers OrderHelpers = new OrderHelpers();
 
-        public static int TieAccountClient(string email, string firstName, string lastName, DateTime dateOfBirth)
+        public  int TieAccountClient(string email, string firstName, string lastName, DateTime dateOfBirth)
         {
             var userData = DataContext.AspNetUsers.FirstOrDefault(x => x.Email == email);
             var client = new Client()
@@ -29,7 +30,7 @@ namespace ErehwonMvc.Helpers
             return dbClient.ClientID;
         }
 
-        public static void TieAccountOrders(int clientId)
+        public  void TieAccountOrders(int clientId)
         {
             //Check if we have a pending order to tie it with our client
             var guid = OrderHelpers.GetTempOrderId();
@@ -39,7 +40,7 @@ namespace ErehwonMvc.Helpers
             DataContext.SubmitChanges();
         }
 
-        public static int GetClientIdByUserId(string userId)
+        public  int GetClientIdByUserId(string userId)
         {
             var client = DataContext.Clients.FirstOrDefault(x => x.UserID == userId);
             return client?.ClientID ?? 0;

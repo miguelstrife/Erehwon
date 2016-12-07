@@ -66,19 +66,6 @@
         <elementListCompartment Id="bb7c74d5-fa61-442a-9cfd-7451e43bf9c0" absoluteBounds="9.515, 2.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="ff08a9bf-b5b3-411d-8b1e-002f4d581f4f" absoluteBounds="6.25, 0.875, 2, 1.9631982421875003">
-      <DataClassMoniker Name="/ErehwonDataContext/Plot" />
-      <nestedChildShapes>
-        <elementListCompartment Id="4cbf4149-fac8-41e0-a378-f78489f2ec03" absoluteBounds="6.265, 1.335, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <associationConnector edgePoints="[(9.5 : 2.23159912109375); (8.25 : 2.23159912109375)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/ErehwonDataContext/PlotCategory/PlotCategory_Plot" />
-      <nodes>
-        <classShapeMoniker Id="5da0966b-6521-4f68-9134-75bc796e5df4" />
-        <classShapeMoniker Id="ff08a9bf-b5b3-411d-8b1e-002f4d581f4f" />
-      </nodes>
-    </associationConnector>
     <classShape Id="d912d89b-d25a-42bc-b76e-207c0fd782dd" absoluteBounds="4.125, 4, 2, 1.7708968098958331">
       <DataClassMoniker Name="/ErehwonDataContext/Client" />
       <nestedChildShapes>
@@ -98,11 +85,24 @@
         <elementListCompartment Id="036cab19-60cb-4033-a6b5-84bda83a3481" absoluteBounds="3.5149999999999997, 1.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.5 : 2.10659912109375); (6.25 : 2.10659912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <classShape Id="8607ebd6-a5da-48a4-ab2c-ece97b44db44" absoluteBounds="6.75, 1.875, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/ErehwonDataContext/Plot" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f5cceaf2-c442-4595-8c7b-d97992f4cfef" absoluteBounds="6.765, 2.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 2.41429768880208); (6.75 : 2.41429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/ErehwonDataContext/Order/Order_Plot" />
       <nodes>
         <classShapeMoniker Id="d8c77110-ad6a-428a-a7f3-0f32ae86afb0" />
-        <classShapeMoniker Id="ff08a9bf-b5b3-411d-8b1e-002f4d581f4f" />
+        <classShapeMoniker Id="8607ebd6-a5da-48a4-ab2c-ece97b44db44" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(9.5 : 2.63544840494792); (8.75 : 2.63544840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/ErehwonDataContext/PlotCategory/PlotCategory_Plot" />
+      <nodes>
+        <classShapeMoniker Id="5da0966b-6521-4f68-9134-75bc796e5df4" />
+        <classShapeMoniker Id="8607ebd6-a5da-48a4-ab2c-ece97b44db44" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

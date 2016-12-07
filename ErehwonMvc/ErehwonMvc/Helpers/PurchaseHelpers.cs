@@ -9,13 +9,14 @@ using ErehwonMvc.Models;
 
 namespace ErehwonMvc.Helpers
 {
-    public static class PurchaseHelpers
+    public  class PurchaseHelpers
     {
         const double MinHect = 20.0;
         const double MaxHect = 500.0;
+        private OrderHelpers OrderHelpers = new OrderHelpers();
 
-        private static readonly ErehwonDataContext DataContext = new ErehwonDataContext();
-        public static bool FinalizePurchase(string orderId)
+        private  readonly ErehwonDataContext DataContext = new ErehwonDataContext();
+        public  bool FinalizePurchase(string orderId)
         {
             var result = false;
             // Begin transaction
@@ -38,7 +39,7 @@ namespace ErehwonMvc.Helpers
             return result;
         }
 
-        public static bool ValidateOrder(string orderId)
+        public  bool ValidateOrder(string orderId)
         {
             // No more than 25% of the total block or more than 500 hect.
             // Min 20 hect per plot.
@@ -75,12 +76,12 @@ namespace ErehwonMvc.Helpers
             return true;
         }
 
-        private static double GetPurchasedHectares(int plotCategoryId)
+        private  double GetPurchasedHectares(int plotCategoryId)
         {
             return DataContext.Plots.Where(x => x.PlotCategoryID == plotCategoryId).Sum(x => x.TotalHectares);
         }
 
-        private static List<Plot> GetClientPurchases(int clientId)
+        private  List<Plot> GetClientPurchases(int clientId)
         {
             var result = new List<Plot>();
             var clientOrders = DataContext.Orders.Where(x => x.ClientID == clientId && x.DateOfCompletion != null);
@@ -96,7 +97,7 @@ namespace ErehwonMvc.Helpers
             return result;
         }
 
-        private static double GetMaxPlotHectare(int plotCategoryId)
+        private  double GetMaxPlotHectare(int plotCategoryId)
         {
             var query = DataContext.PlotCategories.FirstOrDefault(x => x.PlotCategoryID == plotCategoryId);
             if (query?.TotalHectares != null) return query.TotalHectares.Value;

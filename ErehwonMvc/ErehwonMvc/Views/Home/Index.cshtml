@@ -25,6 +25,9 @@
                 var categories = pcc.Get();
                 var count = 0;
 
+                var OrderHelpers = new OrderHelpers();
+                var ViewHelpers = new ViewHelpers();
+
                 foreach (var plotCategory in categories)
                 {
                     var img = ViewHelpers.GetPlotImage(plotCategory.PlotCategoryID, ErehwonMvc.Enums.ImageType.Carousel);

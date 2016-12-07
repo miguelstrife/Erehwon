@@ -48,15 +48,15 @@ namespace ErehwonMvc.Models
     partial void InsertPlotCategory(PlotCategory instance);
     partial void UpdatePlotCategory(PlotCategory instance);
     partial void DeletePlotCategory(PlotCategory instance);
-    partial void InsertPlot(Plot instance);
-    partial void UpdatePlot(Plot instance);
-    partial void DeletePlot(Plot instance);
     partial void InsertClient(Client instance);
     partial void UpdateClient(Client instance);
     partial void DeleteClient(Client instance);
     partial void InsertOrder(Order instance);
     partial void UpdateOrder(Order instance);
     partial void DeleteOrder(Order instance);
+    partial void InsertPlot(Plot instance);
+    partial void UpdatePlot(Plot instance);
+    partial void DeletePlot(Plot instance);
     #endregion
 		
 		public ErehwonDataContext() : 
@@ -137,14 +137,6 @@ namespace ErehwonMvc.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<Plot> Plots
-		{
-			get
-			{
-				return this.GetTable<Plot>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Client> Clients
 		{
 			get
@@ -158,6 +150,14 @@ namespace ErehwonMvc.Models
 			get
 			{
 				return this.GetTable<Order>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Plot> Plots
+		{
+			get
+			{
+				return this.GetTable<Plot>();
 			}
 		}
 	}
@@ -1394,270 +1394,6 @@ namespace ErehwonMvc.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Plot")]
-	public partial class Plot : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _PlotID;
-		
-		private string _PlotName;
-		
-		private string _PlotDescription;
-		
-		private int _PlotCategoryID;
-		
-		private double _TotalHectares;
-		
-		private int _OrderID;
-		
-		private EntityRef<PlotCategory> _PlotCategory;
-		
-		private EntityRef<Order> _Order;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnPlotIDChanging(int value);
-    partial void OnPlotIDChanged();
-    partial void OnPlotNameChanging(string value);
-    partial void OnPlotNameChanged();
-    partial void OnPlotDescriptionChanging(string value);
-    partial void OnPlotDescriptionChanged();
-    partial void OnPlotCategoryIDChanging(int value);
-    partial void OnPlotCategoryIDChanged();
-    partial void OnTotalHectaresChanging(double value);
-    partial void OnTotalHectaresChanged();
-    partial void OnOrderIDChanging(int value);
-    partial void OnOrderIDChanged();
-    #endregion
-		
-		public Plot()
-		{
-			this._PlotCategory = default(EntityRef<PlotCategory>);
-			this._Order = default(EntityRef<Order>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlotID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int PlotID
-		{
-			get
-			{
-				return this._PlotID;
-			}
-			set
-			{
-				if ((this._PlotID != value))
-				{
-					this.OnPlotIDChanging(value);
-					this.SendPropertyChanging();
-					this._PlotID = value;
-					this.SendPropertyChanged("PlotID");
-					this.OnPlotIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlotName", DbType="VarChar(50)")]
-		public string PlotName
-		{
-			get
-			{
-				return this._PlotName;
-			}
-			set
-			{
-				if ((this._PlotName != value))
-				{
-					this.OnPlotNameChanging(value);
-					this.SendPropertyChanging();
-					this._PlotName = value;
-					this.SendPropertyChanged("PlotName");
-					this.OnPlotNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlotDescription", DbType="VarChar(50)")]
-		public string PlotDescription
-		{
-			get
-			{
-				return this._PlotDescription;
-			}
-			set
-			{
-				if ((this._PlotDescription != value))
-				{
-					this.OnPlotDescriptionChanging(value);
-					this.SendPropertyChanging();
-					this._PlotDescription = value;
-					this.SendPropertyChanged("PlotDescription");
-					this.OnPlotDescriptionChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlotCategoryID", DbType="Int NOT NULL")]
-		public int PlotCategoryID
-		{
-			get
-			{
-				return this._PlotCategoryID;
-			}
-			set
-			{
-				if ((this._PlotCategoryID != value))
-				{
-					if (this._PlotCategory.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnPlotCategoryIDChanging(value);
-					this.SendPropertyChanging();
-					this._PlotCategoryID = value;
-					this.SendPropertyChanged("PlotCategoryID");
-					this.OnPlotCategoryIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalHectares", DbType="Float NOT NULL")]
-		public double TotalHectares
-		{
-			get
-			{
-				return this._TotalHectares;
-			}
-			set
-			{
-				if ((this._TotalHectares != value))
-				{
-					this.OnTotalHectaresChanging(value);
-					this.SendPropertyChanging();
-					this._TotalHectares = value;
-					this.SendPropertyChanged("TotalHectares");
-					this.OnTotalHectaresChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="Int NOT NULL")]
-		public int OrderID
-		{
-			get
-			{
-				return this._OrderID;
-			}
-			set
-			{
-				if ((this._OrderID != value))
-				{
-					if (this._Order.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnOrderIDChanging(value);
-					this.SendPropertyChanging();
-					this._OrderID = value;
-					this.SendPropertyChanged("OrderID");
-					this.OnOrderIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlotCategory_Plot", Storage="_PlotCategory", ThisKey="PlotCategoryID", OtherKey="PlotCategoryID", IsForeignKey=true)]
-		public PlotCategory PlotCategory
-		{
-			get
-			{
-				return this._PlotCategory.Entity;
-			}
-			set
-			{
-				PlotCategory previousValue = this._PlotCategory.Entity;
-				if (((previousValue != value) 
-							|| (this._PlotCategory.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._PlotCategory.Entity = null;
-						previousValue.Plots.Remove(this);
-					}
-					this._PlotCategory.Entity = value;
-					if ((value != null))
-					{
-						value.Plots.Add(this);
-						this._PlotCategoryID = value.PlotCategoryID;
-					}
-					else
-					{
-						this._PlotCategoryID = default(int);
-					}
-					this.SendPropertyChanged("PlotCategory");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Plot", Storage="_Order", ThisKey="OrderID", OtherKey="OrderID", IsForeignKey=true)]
-		public Order Order
-		{
-			get
-			{
-				return this._Order.Entity;
-			}
-			set
-			{
-				Order previousValue = this._Order.Entity;
-				if (((previousValue != value) 
-							|| (this._Order.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Order.Entity = null;
-						previousValue.Plots.Remove(this);
-					}
-					this._Order.Entity = value;
-					if ((value != null))
-					{
-						value.Plots.Add(this);
-						this._OrderID = value.OrderID;
-					}
-					else
-					{
-						this._OrderID = default(int);
-					}
-					this.SendPropertyChanged("Order");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Client")]
 	public partial class Client : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2016,6 +1752,294 @@ namespace ErehwonMvc.Models
 		{
 			this.SendPropertyChanging();
 			entity.Order = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Plot")]
+	public partial class Plot : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _PlotID;
+		
+		private string _PlotName;
+		
+		private string _PlotDescription;
+		
+		private int _PlotCategoryID;
+		
+		private double _TotalHectares;
+		
+		private int _OrderID;
+		
+		private System.Nullable<double> _Price;
+		
+		private EntityRef<Order> _Order;
+		
+		private EntityRef<PlotCategory> _PlotCategory;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnPlotIDChanging(int value);
+    partial void OnPlotIDChanged();
+    partial void OnPlotNameChanging(string value);
+    partial void OnPlotNameChanged();
+    partial void OnPlotDescriptionChanging(string value);
+    partial void OnPlotDescriptionChanged();
+    partial void OnPlotCategoryIDChanging(int value);
+    partial void OnPlotCategoryIDChanged();
+    partial void OnTotalHectaresChanging(double value);
+    partial void OnTotalHectaresChanged();
+    partial void OnOrderIDChanging(int value);
+    partial void OnOrderIDChanged();
+    partial void OnPriceChanging(System.Nullable<double> value);
+    partial void OnPriceChanged();
+    #endregion
+		
+		public Plot()
+		{
+			this._Order = default(EntityRef<Order>);
+			this._PlotCategory = default(EntityRef<PlotCategory>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlotID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int PlotID
+		{
+			get
+			{
+				return this._PlotID;
+			}
+			set
+			{
+				if ((this._PlotID != value))
+				{
+					this.OnPlotIDChanging(value);
+					this.SendPropertyChanging();
+					this._PlotID = value;
+					this.SendPropertyChanged("PlotID");
+					this.OnPlotIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlotName", DbType="VarChar(50)")]
+		public string PlotName
+		{
+			get
+			{
+				return this._PlotName;
+			}
+			set
+			{
+				if ((this._PlotName != value))
+				{
+					this.OnPlotNameChanging(value);
+					this.SendPropertyChanging();
+					this._PlotName = value;
+					this.SendPropertyChanged("PlotName");
+					this.OnPlotNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlotDescription", DbType="VarChar(50)")]
+		public string PlotDescription
+		{
+			get
+			{
+				return this._PlotDescription;
+			}
+			set
+			{
+				if ((this._PlotDescription != value))
+				{
+					this.OnPlotDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._PlotDescription = value;
+					this.SendPropertyChanged("PlotDescription");
+					this.OnPlotDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PlotCategoryID", DbType="Int NOT NULL")]
+		public int PlotCategoryID
+		{
+			get
+			{
+				return this._PlotCategoryID;
+			}
+			set
+			{
+				if ((this._PlotCategoryID != value))
+				{
+					if (this._PlotCategory.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPlotCategoryIDChanging(value);
+					this.SendPropertyChanging();
+					this._PlotCategoryID = value;
+					this.SendPropertyChanged("PlotCategoryID");
+					this.OnPlotCategoryIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TotalHectares", DbType="Float NOT NULL")]
+		public double TotalHectares
+		{
+			get
+			{
+				return this._TotalHectares;
+			}
+			set
+			{
+				if ((this._TotalHectares != value))
+				{
+					this.OnTotalHectaresChanging(value);
+					this.SendPropertyChanging();
+					this._TotalHectares = value;
+					this.SendPropertyChanged("TotalHectares");
+					this.OnTotalHectaresChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="Int NOT NULL")]
+		public int OrderID
+		{
+			get
+			{
+				return this._OrderID;
+			}
+			set
+			{
+				if ((this._OrderID != value))
+				{
+					if (this._Order.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnOrderIDChanging(value);
+					this.SendPropertyChanging();
+					this._OrderID = value;
+					this.SendPropertyChanged("OrderID");
+					this.OnOrderIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Price", DbType="Float")]
+		public System.Nullable<double> Price
+		{
+			get
+			{
+				return this._Price;
+			}
+			set
+			{
+				if ((this._Price != value))
+				{
+					this.OnPriceChanging(value);
+					this.SendPropertyChanging();
+					this._Price = value;
+					this.SendPropertyChanged("Price");
+					this.OnPriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Order_Plot", Storage="_Order", ThisKey="OrderID", OtherKey="OrderID", IsForeignKey=true)]
+		public Order Order
+		{
+			get
+			{
+				return this._Order.Entity;
+			}
+			set
+			{
+				Order previousValue = this._Order.Entity;
+				if (((previousValue != value) 
+							|| (this._Order.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Order.Entity = null;
+						previousValue.Plots.Remove(this);
+					}
+					this._Order.Entity = value;
+					if ((value != null))
+					{
+						value.Plots.Add(this);
+						this._OrderID = value.OrderID;
+					}
+					else
+					{
+						this._OrderID = default(int);
+					}
+					this.SendPropertyChanged("Order");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="PlotCategory_Plot", Storage="_PlotCategory", ThisKey="PlotCategoryID", OtherKey="PlotCategoryID", IsForeignKey=true)]
+		public PlotCategory PlotCategory
+		{
+			get
+			{
+				return this._PlotCategory.Entity;
+			}
+			set
+			{
+				PlotCategory previousValue = this._PlotCategory.Entity;
+				if (((previousValue != value) 
+							|| (this._PlotCategory.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._PlotCategory.Entity = null;
+						previousValue.Plots.Remove(this);
+					}
+					this._PlotCategory.Entity = value;
+					if ((value != null))
+					{
+						value.Plots.Add(this);
+						this._PlotCategoryID = value.PlotCategoryID;
+					}
+					else
+					{
+						this._PlotCategoryID = default(int);
+					}
+					this.SendPropertyChanged("PlotCategory");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

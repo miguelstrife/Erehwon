@@ -19,6 +19,9 @@ namespace ErehwonMvc.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        private AccountHelper AccountHelper = new AccountHelper();
+
+
         public AccountController()
         {
         }

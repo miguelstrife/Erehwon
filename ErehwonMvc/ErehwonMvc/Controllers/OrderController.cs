@@ -14,20 +14,35 @@ namespace ErehwonMvc.Controllers
 {
     public class OrderController : Controller
     {
+        private OrderHelpers OrderHelpers = new OrderHelpers();
+        private AccountHelper AccountHelper = new AccountHelper();
+        private PurchaseHelpers PurchaseHelpers = new PurchaseHelpers();
+
         // GET: Order
         public ActionResult Index()
         {
+            
+
             var orderId = OrderHelpers.GetTempOrderId();
             var currentOrder = OrderHelpers.GetOrderByGuid(new Guid(orderId));
 
             // TODO: find a better way to check if Auth User has a pending order
+            if (currentOrder == null)
+            {
+                currentOrder = new Order()
+                {
+                    Plots = new EntitySet<Plot>()
+                };
+            }
+            // Experimenting with ViewData instead of using a ViewModel
+            ViewData["MyOrderPlotList"] = currentOrder.Plots.ToList();
+
             if (currentOrder.ClientID == null && User.Identity.IsAuthenticated)
             {
                 var clientId = AccountHelper.GetClientIdByUserId(User.Identity.GetUserId());
                 AccountHelper.TieAccountOrders(clientId);
             }
 
-            ViewData["MyOrderPlotList"] = currentOrder.Plots.ToList();
             return View(currentOrder);
         }
 
