@@ -1,0 +1,36 @@
+﻿@using ErehwonMvc.Enums
+@using ErehwonMvc.Helpers
+@using ErehwonMvc.Models
+
+@model ErehwonMvc.Models.Order
+@{
+    ViewBag.Title = "Order";
+}
+
+<h2>My Current Order</h2>
+@{
+    var list = (List<Plot>)ViewData["MyOrderPlotList"];
+
+        foreach (var plot in list)
+        {
+            var imgPath = ViewHelpers.GetPlotImage(@plot.PlotCategoryID, ImageType.Thumbnail);
+            <div class="col-md-8">
+                <h2>@plot.PlotName</h2>
+                <img class="col-md-4" alt="Plot Image" src="@imgPath"/>
+                <div class="col-md-4">
+                    <p>@plot.PlotDescription</p>
+                    <h4>Number of ha to purchase</h4>
+
+                    <p>@plot.TotalHectares ha</p>
+                    <button class="btn btn-danger" onclick="location.href = '@Url.Action("Remove", "Order", plot)'">Remove</button>
+                </div>
+            </div>
+            <br/>
+
+        }
+}
+
+<button class="btn btn-success btn-lg">Complete Order</button>
+<h2></h2>
+<button class="btn btn-lg" onclick="location.href = '@Url.Action("Index", "Home")'">Continue Shopping</button>
+

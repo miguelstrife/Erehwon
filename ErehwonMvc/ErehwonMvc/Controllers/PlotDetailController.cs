@@ -28,6 +28,21 @@ namespace ErehwonMvc.Controllers
             return View(plotDetail);
         }
 
+        public void Purchase(PlotDetailModel plotDetailModel)
+        {
+            var orderController = new OrderController();
+            var plots = new List<Plot>
+            {
+                new Plot
+                {
+                    PlotCategoryID = plotDetailModel.PlotCategoryId,
+                    PlotDescription = plotDetailModel.PlotDescription,
+                    PlotName = plotDetailModel.PlotName,
+                }
+            };
+            orderController.Create(plots);
+        }
+
         //// GET: PlotDetail/Details/5
         //public ActionResult Details(int id)
         //{

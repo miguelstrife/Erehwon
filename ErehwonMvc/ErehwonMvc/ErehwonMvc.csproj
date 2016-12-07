@@ -300,7 +300,7 @@
     <Content Include="Views\PlotDetail\Plot.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
     <Content Include="Views\PlotAvailability\PlotAvailability.cshtml" />
-    <Content Include="Views\Order\Order.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

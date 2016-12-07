@@ -30,22 +30,23 @@ namespace ErehwonMvc.Helpers
                     Plots = plotList
                 };
                 DataContext.Orders.InsertOnSubmit(order);
-
-                try
-                {
-                    DataContext.SubmitChanges();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
+            }
+           
+            try
+            {
+                DataContext.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
             }
         }
 
         public static void RemoveItem(Plot plot)
         {
-            DataContext.Plots.DeleteOnSubmit(plot);
+            var plotToDelete = DataContext.Plots.First(x => x.PlotID == plot.PlotID);
+            DataContext.Plots.DeleteOnSubmit(plotToDelete);
 
             try
             {
@@ -62,7 +63,7 @@ namespace ErehwonMvc.Helpers
         {
             //Check if we have an existent order
 
-            var cookie = HttpContext.Current.Response.Cookies.Get(CookieName);
+            var cookie = HttpContext.Current.Request.Cookies.Get(CookieName);
 
             if (!string.IsNullOrWhiteSpace(cookie?.Value)) return cookie.Value;
 

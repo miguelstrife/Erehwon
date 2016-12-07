@@ -1,5 +1,6 @@
 ﻿@using ErehwonMvc.Enums
 @using ErehwonMvc.Helpers
+@using ErehwonMvc.Models
 @model ErehwonMvc.Models.PlotDetailModel
 
 <h2>@Model.PlotName</h2>
@@ -13,6 +14,6 @@
         <p>@Model.PlotDescription</p>
         <h4>Available ha</h4>
         <p>@Model.Hectares ha</p>
-        <button class="btn btn-success btn-sm" onclick="location.href='@Url.Action("Cookie", "Order")'">Purchase</button>
+        <button class="btn btn-success btn-sm" onclick="location.href = '@Url.Action("Purchase", "PlotDetail", @Model)'">Purchase</button>
     </div> 
 </div>
